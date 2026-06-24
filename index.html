@@ -1394,9 +1394,13 @@
 
       function mudarTema(tema) {
         document.body.className = "";
+
         if (tema !== "rosa") {
           document.body.classList.add("tema-" + tema);
         }
+
+        localStorage.setItem("temaFinanceiro", tema);
+
         calcularTudo();
       }
 
@@ -1643,6 +1647,7 @@
           if (gasto) {
             if (!gasto.mesesPagos) gasto.mesesPagos = {};
             gasto.mesesPagos[mesAtual] = status;
+            dadosFinanceiros.tema = document.getElementById("select-tema").value;
             localStorage.setItem(
               "dadosFinanceiros_2026",
               JSON.stringify(dadosFinanceiros)
@@ -1760,6 +1765,7 @@
           gastos: listaGastos,
         };
 
+        dadosFinanceiros.tema = document.getElementById("select-tema").value;
         localStorage.setItem(
           "dadosFinanceiros_2026",
           JSON.stringify(dadosFinanceiros)
@@ -1990,7 +1996,7 @@
           gatinhoTexto.textContent = "Dentro do planejado, mas de olho!";
         } else if (pctOrcamento <= 100) {
           gatinhoHumor.textContent = "🙀";
-          gatinhoTexto.textContent = "Atenção gatinha, limite quase atingido!";
+          gatinhoTexto.textContent = "Atenção gatinha(o), limite quase atingido!";
         } else {
           gatinhoHumor.textContent = "😾";
           gatinhoTexto.textContent = "Eita! O orçamento estourou!";
@@ -2069,19 +2075,19 @@
       }
 
       window.onload = function () {
-        // Tema padrão
-        document.getElementById("select-tema").value = "rosa";
-        mudarTema("rosa");
+  const temaSalvo = localStorage.getItem("temaFinanceiro") || "rosa";
 
-        // Mês selecionado no select
-        const campoSelectMes = document.getElementById("select-mes");
+  document.getElementById("select-tema").value = temaSalvo;
+  mudarTema(temaSalvo);
 
-        if (campoSelectMes) {
-          mudarMes(campoSelectMes.value);
-        }
+  const campoSelectMes = document.getElementById("select-mes");
 
-        calcularTudo();
-      };
+  if (campoSelectMes) {
+    mudarMes(campoSelectMes.value);
+  }
+
+  calcularTudo();
+};
     </script>
   </body>
 </html>
