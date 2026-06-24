@@ -586,15 +586,6 @@
         background: linear-gradient(90deg, #ef4444, #dc2626);
       }
 
-      /* =====================================================
-   DIVA FINANCE PREMIUM UI
-   PARTE 3/3
-===================================================== */
-
-      /* =========================
-   TOTAIS
-========================= */
-
       .container-totais-pagos {
         display: flex;
         justify-content: flex-end;
@@ -786,16 +777,7 @@
         border-left: 5px solid var(--dark-accent);
       }
 
-      /* =========================
-   RESPONSIVO TABLET
-========================= */
-      /* ==========================================
-   RESPONSIVIDADE CORRIGIDA
-========================================== */
 
-      /* ==========================================
-   TABELAS RESPONSIVAS
-========================================== */
 
       .bloco-tabela {
         width: 100%;
@@ -1371,8 +1353,7 @@
         </div>
       </div>
     </div>
-
-    <script>
+<script>
       const MESES_ORDEM = [
         "janeiro",
         "fevereiro",
@@ -1411,10 +1392,11 @@
       function mudarMes(novoMes) {
         mesAtual = novoMes;
         let nomeFormatado = novoMes.charAt(0).toUpperCase() + novoMes.slice(1);
-        document.getElementById("titulo-mes-card").textContent =
-          nomeFormatado + " 2026";
-        document.getElementById("calendario-texto").textContent =
-          nomeFormatado + " 2026";
+        
+        const tituloCard = document.getElementById("titulo-mes-card");
+        const calTexto = document.getElementById("calendario-texto");
+        if (tituloCard) tituloCard.textContent = nomeFormatado + " 2026";
+        if (calTexto) calTexto.textContent = nomeFormatado + " 2026";
 
         let padrao = obterValoresPadrao(mesAtual);
 
@@ -1627,6 +1609,7 @@
           row.classList.remove("linha-paga");
         }
         calcularTudo();
+        salvarDadosCompletosDoMes(false);
       }
 
       function marcarLinhaPagaVisual(checkbox) {
@@ -1637,6 +1620,7 @@
           row.classList.remove("linha-paga");
         }
         calcularTudo();
+        salvarDadosCompletosDoMes(false);
       }
 
       function alternarStatusPagoHerdado(mesOrigem, nomeGasto, status) {
@@ -1647,7 +1631,10 @@
           if (gasto) {
             if (!gasto.mesesPagos) gasto.mesesPagos = {};
             gasto.mesesPagos[mesAtual] = status;
-            dadosFinanceiros.tema = document.getElementById("select-tema").value;
+            
+            const temaSelect = document.getElementById("select-tema");
+            if (temaSelect) dadosFinanceiros.tema = temaSelect.value;
+            
             localStorage.setItem(
               "dadosFinanceiros_2026",
               JSON.stringify(dadosFinanceiros)
@@ -1660,6 +1647,7 @@
       function deletarLinha(botao, index = null) {
         botao.closest("tr").remove();
         calcularTudo();
+        salvarDadosCompletosDoMes(false);
       }
 
       function obterParcelasDeMesesAnteriores(mesAlvo) {
@@ -1673,7 +1661,7 @@
             dadosFinanceiros[mAnterior].gastos
           ) {
             dadosFinanceiros[mAnterior].gastos.forEach((g) => {
-              if (g.tipo.startsWith("Credito")) {
+              if (g.tipo && g.tipo.startsWith("Credito")) {
                 let puloMes = g.tipo === "Credito-Depois" ? 1 : 0;
                 let mesesSePassaram = idxAlvo - (i + puloMes);
 
@@ -1702,7 +1690,8 @@
         return parcelas;
       }
 
-      function salvarDadosCompletosDoMes() {
+      // Parâmetro opcional: exibe o alert tradicional apenas se for disparado por clique manual
+      function salvarDadosCompletosDoMes(exibirFeedbackManual = false) {
         let listaGastos = [];
         document
           .querySelectorAll("#corpo-tabela-gastos tr:not(.linha-herdada)")
@@ -1765,15 +1754,18 @@
           gastos: listaGastos,
         };
 
-        dadosFinanceiros.tema = document.getElementById("select-tema").value;
+        const temaSelect = document.getElementById("select-tema");
+        if (temaSelect) dadosFinanceiros.tema = temaSelect.value;
+
         localStorage.setItem(
           "dadosFinanceiros_2026",
           JSON.stringify(dadosFinanceiros)
         );
-        alert(
-          "Tudo foi salvo com sucesso! 👑 (Entradas, Metas, Tabela de Gastos e Saldo)"
-        );
-        renderizarGastos();
+
+        if (exibirFeedbackManual) {
+          alert("Tudo foi salvo com sucesso! 👑");
+          renderizarGastos();
+        }
       }
 
       function calcularTudo() {
@@ -1817,9 +1809,8 @@
         let totalCreditoMes = 0;
 
         const tbodyPagos = document.getElementById("corpo-tabela-pagos");
-        tbodyPagos.innerHTML = "";
+        if (tbodyPagos) tbodyPagos.innerHTML = "";
 
-        // Processando gastos atuais digitados na tabela
         document
           .querySelectorAll("#corpo-tabela-gastos tr:not(.linha-herdada)")
           .forEach((linha) => {
@@ -1856,29 +1847,25 @@
                     cats[catSelect.value] += valorRealDesteMes;
                   }
 
-                  if (pagoCheck && pagoCheck.checked) {
+                  if (pagoCheck && pagoCheck.checked && tbodyPagos) {
                     totalJaPago += valorRealDesteMes;
 
                     tbodyPagos.innerHTML += `
-        <tr>
-          <td>✅ ${nomeGasto}</td>
-          <td>${catSelect.value}</td>
-          <td>Crédito</td>
-          <td class="alinhado-direita" style="color: var(--green-success); font-weight:bold;">
-            R$ ${valorRealDesteMes.toFixed(2)}
-          </td>
-        </tr>
-      `;
+                      <tr>
+                        <td>✅ ${nomeGasto}</td>
+                        <td>${catSelect.value}</td>
+                        <td>Crédito</td>
+                        <td class="alinhado-direita" style="color: var(--green-success); font-weight:bold;">
+                          R$ ${valorRealDesteMes.toFixed(2)}
+                        </td>
+                      </tr>
+                    `;
                   }
                 }
-
-                // Crédito após dia 11 não entra neste mês.
-                // Vai aparecer somente no próximo mês.
               }
             }
           });
 
-        // Processando gastos herdados (parcelas de meses anteriores)
         document
           .querySelectorAll("#corpo-tabela-gastos tr.linha-herdada")
           .forEach((linha) => {
@@ -1897,7 +1884,7 @@
                 cats[cat] += valorParc;
               }
 
-              if (pagoCheck && pagoCheck.checked) {
+              if (pagoCheck && pagoCheck.checked && tbodyPagos) {
                 totalJaPago += valorParc;
                 tbodyPagos.innerHTML += `
                     <tr>
@@ -1930,22 +1917,11 @@
         document.getElementById("total-restante-pago").textContent =
           totalRestante.toFixed(2).replace(".", ",");
 
-        // Atualizando tetos de gastos por categoria
         for (let cat in cats) {
-          let idTxt =
-            "txt-lim-" +
-            cat
-              .toLowerCase()
-              .normalize("NFD")
-              .replace(/[\u0300-\u036f]/g, "");
-          if (cat === "Autoestima") idTxt = "txt-lim-autoestima"; // Correção manual do id mapeado no HTML
+          let idTxt = "txt-lim-" + cat.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+          if (cat === "Autoestima") idTxt = "txt-lim-autoestima";
 
-          let idBar =
-            "bar-" +
-            cat
-              .toLowerCase()
-              .normalize("NFD")
-              .replace(/[\u0300-\u036f]/g, "");
+          let idBar = "bar-" + cat.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
           if (cat === "Autoestima") idBar = "bar-autoestima";
 
           let elementoTxt = document.getElementById(idTxt);
@@ -1972,7 +1948,6 @@
           }
         }
 
-        // Cálculo de Saldo e Humor do Gatinho
         let saldoPlanejado = totalEntradas - totalSaidas - totalInvestimentos;
         document.getElementById("val-saldo").textContent = saldoPlanejado
           .toFixed(2)
@@ -1988,26 +1963,28 @@
         let gatinhoHumor = document.getElementById("gatinho-humor");
         let gatinhoTexto = document.getElementById("gatinho-status-texto");
 
-        if (pctOrcamento <= 50) {
-          gatinhoHumor.textContent = "😸";
-          gatinhoTexto.textContent = "Arrasou! Orçamento super controlado!";
-        } else if (pctOrcamento <= 85) {
-          gatinhoHumor.textContent = "😼";
-          gatinhoTexto.textContent = "Dentro do planejado, mas de olho!";
-        } else if (pctOrcamento <= 100) {
-          gatinhoHumor.textContent = "🙀";
-          gatinhoTexto.textContent = "Atenção gatinha(o), limite quase atingido!";
-        } else {
-          gatinhoHumor.textContent = "😾";
-          gatinhoTexto.textContent = "Eita! O orçamento estourou!";
+        if (gatinhoHumor && gatinhoTexto) {
+          if (pctOrcamento <= 50) {
+            gatinhoHumor.textContent = "😸";
+            gatinhoTexto.textContent = "Arrasou! Orçamento super controlado!";
+          } else if (pctOrcamento <= 85) {
+            gatinhoHumor.textContent = "😼";
+            gatinhoTexto.textContent = "Dentro do planejado, mas de olho!";
+          } else if (pctOrcamento <= 100) {
+            gatinhoHumor.textContent = "🙀";
+            gatinhoTexto.textContent = "Atenção gatinha(o), limite quase atingido!";
+          } else {
+            gatinhoHumor.textContent = "😾";
+            gatinhoTexto.textContent = "Eita! O orçamento estourou!";
+          }
         }
       }
 
       function compararMes() {
-        const mesComparado = document.getElementById(
-          "comparar-mes-select"
-        ).value;
+        const mesComparado = document.getElementById("comparar-mes-select").value;
         const resultado = document.getElementById("resultado-comparativo");
+
+        if (!resultado) return;
 
         if (mesComparado === "0" || !dadosFinanceiros[mesComparado]) {
           resultado.innerHTML = "Nenhum dado salvo para este mês.";
@@ -2074,20 +2051,50 @@
         resultado.innerHTML = texto;
       }
 
+      // Ativa escuta global de mudanças na página para acionar o auto-save
+      function inicializarAutoSalvamento() {
+        const containerApp = document.body;
+
+        // Captura digitação em inputs de texto/número de forma inteligente (Debounce implícito)
+        containerApp.addEventListener("input", function (evento) {
+          if (
+            evento.target.classList.contains("input-entrada") ||
+            evento.target.classList.contains("input-investimento") ||
+            evento.target.classList.contains("gasto-nome") ||
+            evento.target.classList.contains("input-gasto") ||
+            evento.target.classList.contains("gasto-parcelas")
+          ) {
+            salvarDadosCompletosDoMes(false);
+          }
+        });
+
+        // Captura mudanças em caixas de seleção (categorias, tipos de gasto)
+        containerApp.addEventListener("change", function (evento) {
+          if (
+            evento.target.classList.contains("gasto-cat") ||
+            evento.target.classList.contains("gasto-tipo")
+          ) {
+            salvarDadosCompletosDoMes(false);
+          }
+        });
+      }
+
       window.onload = function () {
-  const temaSalvo = localStorage.getItem("temaFinanceiro") || "rosa";
+        const temaSalvo = localStorage.getItem("temaFinanceiro") || "rosa";
 
-  document.getElementById("select-tema").value = temaSalvo;
-  mudarTema(temaSalvo);
+        const temaSelect = document.getElementById("select-tema");
+        if (temaSelect) temaSelect.value = temaSalvo;
+        mudarTema(temaSalvo);
 
-  const campoSelectMes = document.getElementById("select-mes");
+        const campoSelectMes = document.getElementById("select-mes");
 
-  if (campoSelectMes) {
-    mudarMes(campoSelectMes.value);
-  }
+        if (campoSelectMes) {
+          mudarMes(campoSelectMes.value);
+        }
 
-  calcularTudo();
-};
+        calcularTudo();
+        inicializarAutoSalvamento(); // Ativa o monitoramento automático
+      };
     </script>
   </body>
 </html>
