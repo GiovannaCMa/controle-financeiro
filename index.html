@@ -1,0 +1,2087 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controle Financeiro Diva 👑</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
+      :root {
+        --bg-main: #f5f7fb;
+        --bg-secondary: #eef2ff;
+
+        --primary: #ffb7d5;
+        --dark-accent: #ff69b4;
+
+        --purple-light: #f3e8ff;
+        --purple-dark: #9b5de5;
+
+        --text-dark: #2d3748;
+        --text-light: #718096;
+
+        --card-bg: rgba(255, 255, 255, 0.88);
+
+        --green-success: #16a34a;
+        --danger: #ef4444;
+        --warning: #f59e0b;
+
+        --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+        --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.06);
+        --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.08);
+
+        --radius: 20px;
+      }
+
+      /* =========================
+   TEMAS
+========================= */
+
+      body.tema-lilas {
+        --primary: #d8b4f8;
+        --dark-accent: #9b5de5;
+        --purple-light: #f3e8ff;
+      }
+
+      body.tema-azul {
+        --primary: #a2d2ff;
+        --dark-accent: #0077b6;
+        --purple-light: #dbeafe;
+      }
+
+      body.tema-verde {
+        --primary: #b7e4c7;
+        --dark-accent: #2d6a4f;
+        --purple-light: #dcfce7;
+      }
+
+      body.tema-creme {
+        --primary: #f3c68f;
+        --dark-accent: #d4a373;
+        --purple-light: #fef3c7;
+      }
+
+      /* =========================
+   BODY
+========================= */
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        width: 100%;
+        overflow-x: hidden;
+      }
+
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background-color: var(--bg-main);
+        color: var(--text-dark);
+        margin: 0;
+        padding: 20px;
+        transition: all 0.3s ease;
+      }
+
+      /* MOBILE */
+
+      @media (max-width: 768px) {
+        body {
+          padding: 10px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 8px;
+        }
+      }
+
+      /* =========================
+   SCROLL
+========================= */
+
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(
+          180deg,
+          var(--dark-accent),
+          var(--purple-dark)
+        );
+        border-radius: 50px;
+      }
+
+      /* =========================
+   HEADER
+========================= */
+
+      header {
+        width: 100%;
+        max-width: 1420px !important;
+
+        margin: 0 auto 25px auto;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+
+        padding: 22px 28px;
+
+        background: var(--card-bg);
+        backdrop-filter: blur(15px);
+
+        border-radius: 24px;
+
+        box-shadow: var(--shadow-md);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+      }
+
+      h1 {
+        font-size: 1.6rem;
+        font-weight: 800;
+
+        background: linear-gradient(
+          135deg,
+          var(--dark-accent),
+          var(--purple-dark)
+        );
+
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* =========================
+   CONTROLES
+========================= */
+
+      .controles-topo {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+
+      select {
+        height: 42px;
+
+        padding: 0 14px;
+
+        border: none;
+
+        border-radius: 12px;
+
+        background: white;
+
+        font-weight: 600;
+
+        color: var(--text-dark);
+
+        box-shadow: var(--shadow-sm);
+
+        outline: none;
+
+        transition: 0.25s;
+      }
+
+      select:hover {
+        transform: translateY(-1px);
+      }
+
+      select:focus {
+        box-shadow: 0 0 0 4px rgba(255, 105, 180, 0.15);
+      }
+
+      #select-mes {
+        background: var(--purple-light);
+      }
+
+      /* =========================
+   BOTÕES
+========================= */
+
+      .btn-update,
+      .btn-salvar-tudo-topo {
+        border: none;
+
+        background: linear-gradient(
+          135deg,
+          var(--dark-accent),
+          var(--purple-dark)
+        );
+
+        color: white;
+
+        font-weight: 700;
+
+        cursor: pointer;
+
+        transition: 0.25s;
+
+        box-shadow: 0 10px 25px rgba(155, 93, 229, 0.25);
+      }
+
+      .btn-update {
+        width: 100%;
+        padding: 12px;
+        border-radius: 14px;
+      }
+
+      .btn-salvar-tudo-topo {
+        padding: 12px 18px;
+        border-radius: 14px;
+      }
+
+      .btn-update:hover,
+      .btn-salvar-tudo-topo:hover {
+        transform: translateY(-3px);
+      }
+
+      .btn-update:active,
+      .btn-salvar-tudo-topo:active {
+        transform: scale(0.97);
+      }
+
+      /* =====================================================
+   DIVA FINANCE PREMIUM UI
+   PARTE 2/3
+===================================================== */
+
+      /* =========================
+   RESUMO FINANCEIRO
+========================= */
+
+      .grid-resumo {
+        max-width: 1400px;
+        margin: 0 auto 25px auto;
+
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+
+      .card-saldo {
+        background: var(--card-bg);
+        padding: 15px;
+        border-radius: 12px;
+        text-align: center;
+        font-weight: bold;
+        border: 2px solid var(--primary);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .card-saldo span {
+        display: block;
+        font-size: 1.6rem;
+        margin-top: 5px;
+        color: var(--dark-accent);
+      }
+
+      .card-saldo-input {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: var(--dark-accent);
+        background: var(--bg-main);
+        border: 2px solid var(--primary);
+        border-radius: 8px;
+        width: 140px;
+        text-align: center;
+        padding: 2px;
+        margin-top: 5px;
+        outline: none;
+      }
+
+      .card-subtext {
+        font-size: 0.78rem;
+        color: #7f8c8d;
+        margin-top: 4px;
+        font-weight: normal;
+      }
+
+      /* =========================
+   DASHBOARD
+========================= */
+
+      .dashboard {
+        max-width: 1400px;
+        margin: auto;
+
+        display: grid;
+        grid-template-columns: 25% 50% 24%;
+
+        gap: 10px;
+      }
+
+      .coluna {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+      }
+
+      /* =========================
+   BLOCOS
+========================= */
+      .bloco {
+        background: var(--card-bg);
+        backdrop-filter: blur(18px);
+        border-radius: 20px; /* Leve redução no arredondamento para combinar com tamanhos menores */
+
+        /* Diminuindo o padding de 24px para 16px ou 18px */
+        padding: 18px;
+
+        box-shadow: var(--shadow-md);
+        transition: 0.3s ease;
+      }
+
+      .bloco:hover {
+        transform: translateY(-3px);
+      }
+
+      .bloco h2 {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        /* Reduzindo as margens que geram altura extra */
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+
+        font-size: 1rem; /* Diminuindo levemente o tamanho do texto do título */
+        font-weight: 700;
+
+        color: var(--dark-accent);
+
+        border-bottom: 2px solid var(--purple-light);
+      }
+
+      /* =========================
+   GATINHO
+========================= */
+
+      .status-box {
+        text-align: center;
+      }
+
+      .gatinho-container {
+        font-size: 5rem;
+
+        margin: 15px 0;
+
+        transition: 0.3s ease;
+      }
+
+      .gatinho-container:hover {
+        transform: scale(1.15) rotate(5deg);
+      }
+
+      .porcentagem-status {
+        font-size: 2.4rem;
+        font-weight: 800;
+
+        background: linear-gradient(
+          135deg,
+          var(--dark-accent),
+          var(--purple-dark)
+        );
+
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .calendario-mini {
+        margin-top: 15px;
+
+        padding: 12px;
+
+        border-radius: 14px;
+
+        background: var(--purple-light);
+
+        font-weight: 700;
+      }
+
+      /* =========================
+   INPUTS
+========================= */
+
+      input[type="text"],
+      input[type="number"],
+      select.tabela-select {
+        width: 100%;
+
+        border: none;
+
+        border-radius: 12px;
+
+        background: #f8fafc;
+
+        padding: 10px 12px;
+
+        color: var(--text-dark);
+
+        transition: 0.25s;
+      }
+
+      input:focus,
+      select:focus {
+        background: white;
+
+        transform: translateY(-1px);
+
+        box-shadow: 0 0 0 4px rgba(255, 105, 180, 0.12);
+
+        outline: none;
+      }
+
+      .input-disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      /* =========================
+   TABELAS
+========================= */
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+      }
+
+      th {
+        background: var(--purple-light);
+
+        color: var(--dark-accent);
+
+        padding: 12px;
+
+        text-align: left;
+
+        font-size: 0.85rem;
+
+        font-weight: 700;
+      }
+
+      td {
+        padding: 12px;
+
+        border-bottom: 1px solid #edf2f7;
+      }
+
+      tbody tr {
+        transition: 0.2s;
+      }
+
+      tbody tr:hover {
+        background: rgba(255, 255, 255, 0.8);
+      }
+
+      /* =========================
+   CHECKBOX PAGO
+========================= */
+
+      /* Adiciona espaçamento superior entre a dashboard e o bloco de baixo */
+      .secao-inferior {
+        margin-top: 40px !important;
+        /* Ajuste este valor para mais ou menos distância */
+        max-width: 1400px;
+        margin: 0 auto 25px auto;
+
+        display: grid;
+
+        gap: 18px;
+      }
+
+      .secao-inferior .bloco {
+        width: 100%;
+        overflow: hidden; /* Evita que o conteúdo interno force o tamanho do bloco */
+      }
+
+      /* Garante a rolagem horizontal apenas para a tabela, mantendo o bloco intacto */
+      #tabela-pagos {
+        width: 100%;
+        min-width: 600px; /* A tabela precisa de um mínimo para não ficar ilegível */
+      }
+
+      .checkbox-pago {
+        transform: scale(1.3);
+        cursor: pointer;
+      }
+
+      .linha-paga {
+        background: #ecfdf5 !important;
+      }
+
+      .parcela-info {
+        display: block;
+
+        margin-top: 30px;
+
+        font-size: 0.72rem;
+
+        color: var(--text-light);
+      }
+
+      /* =========================
+   LIMITES
+========================= */
+
+      .item-limite {
+        margin-bottom: 18px;
+      }
+
+      .limite-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        margin-bottom: 8px;
+
+        font-size: 0.85rem;
+
+        font-weight: 600;
+      }
+
+      .barra-progresso-bg {
+        width: 100%;
+        height: 14px;
+
+        overflow: hidden;
+
+        border-radius: 30px;
+
+        background: #e2e8f0;
+      }
+
+      .barra-progresso-fill {
+        height: 100%;
+        width: 0%;
+
+        border-radius: 30px;
+
+        background: linear-gradient(
+          90deg,
+          var(--dark-accent),
+          var(--purple-dark)
+        );
+
+        transition: all 0.6s ease;
+      }
+
+      .barra-progresso-fill.alerta {
+        background: linear-gradient(90deg, #ef4444, #dc2626);
+      }
+
+      /* =====================================================
+   DIVA FINANCE PREMIUM UI
+   PARTE 3/3
+===================================================== */
+
+      /* =========================
+   TOTAIS
+========================= */
+
+      .container-totais-pagos {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 30px;
+
+        margin-top: 20px;
+        padding-top: 15px;
+
+        border-top: 2px solid var(--purple-light);
+
+        font-size: 1.1rem;
+        font-weight: 700;
+      }
+
+      .container-totais-pagos span {
+        color: var(--dark-accent);
+      }
+
+      /* =========================
+   BOTÃO DELETAR
+========================= */
+
+      .btn-deletar {
+        width: 34px;
+        height: 34px;
+
+        border: none;
+        border-radius: 10px;
+
+        background: rgba(239, 68, 68, 0.1);
+
+        color: #ef4444;
+
+        cursor: pointer;
+
+        font-size: 1rem;
+        font-weight: 700;
+
+        transition: 0.25s;
+      }
+
+      .btn-deletar:hover {
+        background: #ef4444;
+        color: white;
+        transform: scale(1.08);
+      }
+
+      /* =========================
+   ALINHAMENTOS
+========================= */
+
+      .alinhado-direita {
+        text-align: right;
+      }
+
+      /* =========================
+   ANIMAÇÕES
+========================= */
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(15px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes pulseGlow {
+        0% {
+          box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.4);
+        }
+
+        70% {
+          box-shadow: 0 0 0 12px rgba(255, 105, 180, 0);
+        }
+
+        100% {
+          box-shadow: 0 0 0 0 rgba(255, 105, 180, 0);
+        }
+      }
+
+      .bloco,
+      .card-saldo {
+        animation: fadeUp 0.45s ease;
+      }
+
+      /* =========================
+   BADGES
+========================= */
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+
+        padding: 6px 12px;
+
+        border-radius: 999px;
+
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+
+      .badge-success {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      .badge-danger {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .badge-warning {
+        background: #fef3c7;
+        color: #92400e;
+      }
+
+      /* =========================
+   CARDS COM BRILHO
+========================= */
+
+      .card-saldo {
+        position: relative;
+      }
+
+      .card-saldo::after {
+        content: "";
+
+        position: absolute;
+
+        top: -50%;
+        left: -50%;
+
+        width: 200%;
+        height: 200%;
+
+        background: linear-gradient(
+          120deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.25) 50%,
+          transparent 70%
+        );
+
+        transform: translateX(-100%);
+      }
+
+      .card-saldo:hover::after {
+        transition: 1s;
+        transform: translateX(100%);
+      }
+
+      /* =========================
+   BLOCO DE INVESTIMENTOS
+========================= */
+
+      .bloco-investimento {
+        background: linear-gradient(
+          135deg,
+          rgba(155, 93, 229, 0.08),
+          rgba(255, 105, 180, 0.08)
+        );
+      }
+
+      /* =========================
+   CAMPOS MONETÁRIOS
+========================= */
+
+      .valor-positivo {
+        color: #16a34a;
+        font-weight: 700;
+      }
+
+      .valor-negativo {
+        color: #dc2626;
+        font-weight: 700;
+      }
+
+      /* =========================
+   SOMBRA DE DESTAQUE
+========================= */
+
+      .destaque {
+        border-left: 5px solid var(--dark-accent);
+      }
+
+      /* =========================
+   RESPONSIVO TABLET
+========================= */
+      /* ==========================================
+   RESPONSIVIDADE CORRIGIDA
+========================================== */
+
+      /* ==========================================
+   TABELAS RESPONSIVAS
+========================================== */
+
+      .bloco-tabela {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-top: 20px;
+      }
+
+      .bloco-tabela table {
+        min-width: 700px;
+      }
+
+      /* ==========================================
+   EVITAR ELEMENTOS ESTOURANDO
+========================================== */
+
+      img,
+      canvas,
+      svg {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .card-saldo,
+      .bloco,
+      header {
+        max-width: 100%;
+      }
+      /* =========================
+   MODO ESCURO (OPCIONAL)
+========================= */
+
+      body.dark {
+        --bg-main: #0f172a;
+        --bg-secondary: #1e293b;
+
+        --card-bg: rgba(30, 41, 59, 0.92);
+
+        --text-dark: #f8fafc;
+        --text-light: #94a3b8;
+      }
+
+      body.dark .bloco,
+      body.dark .card-saldo,
+      body.dark header {
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      body.dark input,
+      body.dark select {
+        background: #334155;
+        color: white;
+      }
+
+      body.dark table td {
+        border-color: #334155;
+      }
+
+      /* =========================
+   EFEITO PREMIUM FINAL
+========================= */
+
+      .bloco:hover,
+      .card-saldo:hover {
+        will-change: transform;
+      }
+
+      .btn-update,
+      .btn-salvar-tudo-topo {
+        animation: pulseGlow 3s infinite;
+      }
+
+      /* =========================
+   GASTOS - SCROLL VERTICAL FIXO
+========================= */
+
+      #tabela-gastos {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      /* BLOCO FIXO COM ALTURA E SCROLL */
+      /* Container que limita a altura e habilita o scroll apenas no conteúdo da tabela */
+      .bloco-gastos-scroll {
+        max-height: 450px; /* Ajuste conforme a necessidade */
+        overflow-y: auto;
+        overflow-x: auto;
+        border-radius: 14px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        margin-top: 15px;
+      }
+
+      /* Estilização da Scrollbar para manter o design premium */
+      .bloco-gastos-scroll::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      .bloco-gastos-scroll::-webkit-scrollbar-thumb {
+        background: var(--dark-accent);
+        border-radius: 10px;
+      }
+
+      /* Garante que a tabela não "quebre" em telas menores */
+      #tabela-gastos {
+        width: 100%;
+        min-width: 800px; /* Ajuste o min-width para evitar que colunas fiquem espremidas */
+        border-collapse: collapse;
+      }
+
+      /* ==========================================
+   MOBILE REAL
+========================================== */
+
+      .container-scroll,
+      .bloco-tabela {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      #tabela-gastos {
+        min-width: 900px;
+      }
+
+      #tabela-pagos {
+        min-width: 700px;
+      }
+
+      /* =========================
+   RESPONSIVO PREMIUM
+========================= */
+
+      /* TABLET */
+      @media screen and (max-width: 1024px) {
+        .dashboard {
+          grid-template-columns: 1fr !important;
+          gap: 18px !important;
+        }
+
+        .grid-resumo {
+          grid-template-columns: repeat(2, 1fr) !important;
+        }
+
+        header {
+          flex-direction: column;
+          align-items: stretch;
+        }
+      }
+
+      /* MOBILE */
+      @media screen and (max-width: 768px) {
+        body {
+          padding: 10px !important;
+        }
+
+        .grid-resumo {
+          grid-template-columns: 1fr !important;
+        }
+
+        .dashboard {
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 15px !important;
+        }
+
+        .coluna {
+          width: 100% !important;
+        }
+
+        .bloco {
+          padding: 14px !important;
+        }
+
+        header {
+          text-align: center;
+          gap: 10px;
+        }
+
+        select,
+        button {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Controle Financeiro 👑</h1>
+      <div class="controles-topo">
+        <button
+          class="btn-salvar-tudo-topo"
+          onclick="salvarDadosCompletosDoMes()"
+        >
+          💾 Salvar Dados de Tudo
+        </button>
+        <div>
+          <label for="select-mes">Mês: </label>
+          <select id="select-mes" onchange="mudarMes(this.value)">
+            <option value="janeiro">Janeiro</option>
+            <option value="fevereiro">Fevereiro</option>
+            <option value="março">Março</option>
+            <option value="abril">Abril</option>
+            <option value="maio">Maio</option>
+            <option value="junho" selected>Junho</option>
+            <option value="julho">Julho</option>
+            <option value="agosto">Agosto</option>
+            <option value="setembro">Setembro</option>
+            <option value="outubro">Outubro</option>
+            <option value="novembro">Novembro</option>
+            <option value="dezembro">Dezembro</option>
+          </select>
+        </div>
+        <div>
+          <label for="select-tema">Tema: </label>
+          <select id="select-tema" onchange="mudarTema(this.value)">
+            <option value="rosa">Rosa / Pink</option>
+            <option value="lilas">Lilás / Lilac</option>
+            <option value="azul">Azul / Blue</option>
+            <option value="verde">Verde / Green</option>
+            <option value="creme">Creme / Cream</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid-resumo">
+      <div class="card-saldo">
+        Saldo Planejado <span>R$ <span id="val-saldo">0,00</span></span>
+      </div>
+      <div class="card-saldo">
+        Entradas Totais <span>R$ <span id="val-entradas">0,00</span></span>
+      </div>
+      <div class="card-saldo">
+        Saídas Planejadas <span>R$ <span id="val-saidas">0,00</span></span>
+      </div>
+    </div>
+
+    <div class="dashboard">
+      <div class="coluna">
+        <div class="bloco status-box">
+          <h2 id="titulo-mes-card">Junho 2026</h2>
+          <div class="porcentagem-status" id="txt-porcentagem">0%</div>
+          <div class="gatinho-container" id="gatinho-humor">😸</div>
+          <div
+            id="gatinho-status-texto"
+            style="font-size: 0.85rem; font-weight: bold"
+          >
+            Dentro do orçamento!
+          </div>
+          <div class="calendario-mini">
+            📅 <span id="calendario-texto">Junho 2026</span><br /><span
+              style="font-weight: normal; font-size: 0.8rem"
+              >Metas do mês</span
+            >
+          </div>
+        </div>
+
+        <div class="bloco">
+          <h2>Investimentos (Metas)</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Meta/Objetivo</th>
+                <th class="alinhado-direita">Valor (R$)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Reserva de emergência</td>
+                <td>
+                  <input
+                    type="number"
+                    id="inv-reserva"
+                    class="input-investimento"
+                    value="0"
+                    oninput="calcularTudo();"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Viagem</td>
+                <td>
+                  <input
+                    type="number"
+                    id="inv-viagem"
+                    class="input-investimento"
+                    value="0"
+                    oninput="calcularTudo();"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Apartamento</td>
+                <td>
+                  <input
+                    type="number"
+                    id="inv-apartamento"
+                    class="input-investimento"
+                    value="0"
+                    oninput="calcularTudo();"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Fundo Reserva</td>
+                <td>
+                  <input
+                    type="number"
+                    id="inv-fundo"
+                    class="input-investimento"
+                    value="0"
+                    oninput="calcularTudo();"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="margin-top: 10px; font-weight: bold; font-size: 0.9rem">
+            Total Investido: R$ <span id="total-investimentos">0,00</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="coluna">
+        <div class="bloco">
+          <h2>Entradas (Rendimentos)</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Descrição</th>
+                <th class="alinhado-direita">Valor esperado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Salário / Estágio</td>
+                <td>
+                  <input
+                    type="number"
+                    id="ent-salario"
+                    class="input-entrada"
+                    value="0"
+                    oninput="calcularTudo();"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Pensão</td>
+                <td>
+                  <input
+                    type="number"
+                    id="ent-pensao"
+                    class="input-entrada"
+                    value="0"
+                    oninput="calcularTudo();"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Vale Transporte</td>
+                <td>
+                  <input
+                    type="number"
+                    id="ent-vt"
+                    class="input-entrada"
+                    value="0"
+                    oninput="calcularTudo();"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Extra</td>
+                <td>
+                  <input
+                    type="number"
+                    id="ent-extra"
+                    class="input-entrada"
+                    value="0"
+                    oninput="calcularTudo();"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>O que sobrou do mês anterior</td>
+                <td>
+                  <input
+                    type="number"
+                    id="ent-sobra"
+                    class="input-entrada"
+                    value="0"
+                    oninput="calcularTudo();"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="bloco">
+          <h2>Saídas / Registro de Gastos</h2>
+
+          <div class="bloco-gastos-scroll">
+            <table id="tabela-gastos">
+              <thead>
+                <tr>
+                  <th>Nome do Gasto</th>
+                  <th>Categoria</th>
+                  <th>Pagamento / Época</th>
+                  <th>Parc.</th>
+                  <th class="alinhado-direita">Valor total (R$)</th>
+                  <th>Marcar Pago</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="corpo-tabela-gastos"></tbody>
+            </table>
+          </div>
+
+          <button
+            class="btn-update"
+            style="margin-top: 15px"
+            onclick="adicionarLinhaGasto()"
+          >
+            + Adicionar Linha de Gasto
+          </button>
+        </div>
+      </div>
+
+      <div class="coluna">
+        <div class="bloco">
+          <h2>Limites por Categoria</h2>
+          <p style="font-size: 0.75rem; color: #888; margin: -5px 0 15px 0">
+            Defina seus tetos de gastos:
+          </p>
+
+          <div class="item-limite">
+            <div class="limite-info">
+              <span>Contas</span
+              ><span id="txt-lim-contas">R$ 0,00 / Limite: R$ 100</span>
+            </div>
+            <div class="barra-progresso-bg">
+              <div id="bar-contas" class="barra-progresso-fill"></div>
+            </div>
+          </div>
+
+          <div class="item-limite">
+            <div class="limite-info">
+              <span>Vestuário</span
+              ><span id="txt-lim-vestuario">R$ 0,00 / Limite: R$ 100</span>
+            </div>
+            <div class="barra-progresso-bg">
+              <div id="bar-vestuario" class="barra-progresso-fill"></div>
+            </div>
+          </div>
+
+          <div class="item-limite">
+            <div class="limite-info">
+              <span>iFood</span
+              ><span id="txt-lim-ifood">R$ 0,00 / Limite: R$ 80</span>
+            </div>
+            <div class="barra-progresso-bg">
+              <div id="bar-ifood" class="barra-progresso-fill"></div>
+            </div>
+          </div>
+
+          <div class="item-limite">
+            <div class="limite-info">
+              <span>UBER</span
+              ><span id="txt-lim-uber">R$ 0,00 / Limite: R$ 100</span>
+            </div>
+            <div class="barra-progresso-bg">
+              <div id="bar-uber" class="barra-progresso-fill"></div>
+            </div>
+          </div>
+
+          <div class="item-limite">
+            <div class="limite-info">
+              <span>Saúde</span
+              ><span id="txt-lim-saude">R$ 0,00 / Limite: R$ 150</span>
+            </div>
+            <div class="barra-progresso-bg">
+              <div id="bar-saude" class="barra-progresso-fill"></div>
+            </div>
+          </div>
+
+          <div class="item-limite">
+            <div class="limite-info">
+              <span>A. estima</span
+              ><span id="txt-lim-autoestima">R$ 0,00 / Limite: R$ 190</span>
+            </div>
+            <div class="barra-progresso-bg">
+              <div id="bar-autoestima" class="barra-progresso-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bloco" style="font-size: 0.85rem">
+          <h2>Saídas por Tipo (Mês Atual)</h2>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 5px;
+            "
+          >
+            <span>Pix/Débito Total:</span><span id="tipo-debito">R$ 0,00</span>
+          </div>
+          <div style="display: flex; justify-content: space-between">
+            <span>Crédito Total (Mês):</span
+            ><span id="tipo-credito">R$ 0,00</span>
+          </div>
+        </div>
+
+        <div class="bloco">
+          <h2>Comparativo Anual</h2>
+          <p style="font-size: 0.75rem; color: #888">
+            Escolha um mês para comparar entradas:
+          </p>
+          <select
+            id="comparar-mes-select"
+            onchange="compararMes()"
+            style="width: 100%; padding: 5px"
+          >
+            <option value="0">Selecionar mês...</option>
+            <option value="janeiro">Janeiro</option>
+            <option value="fevereiro">Fevereiro</option>
+            <option value="março">Março</option>
+            <option value="abril">Abril</option>
+            <option value="maio">Maio</option>
+            <option value="junho">Junho</option>
+            <option value="julho">Julho</option>
+            <option value="agosto">Agosto</option>
+            <option value="setembro">Setembro</option>
+            <option value="outubro">Outubro</option>
+            <option value="novembro">Novembro</option>
+            <option value="dezembro">Dezembro</option>
+          </select>
+          <div
+            id="resultado-comparativo"
+            style="margin-top: 10px; font-weight: bold; font-size: 0.9rem"
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="secao-inferior">
+      <div class="bloco" style="border-color: var(--green-success)">
+        <h2 style="color: var(--green-success); border-bottom-color: #c2f0d5">
+          📋 Controle de Pagamentos Efetuados (À Parte)
+        </h2>
+        <div class="container-scroll bloco-tabela">
+          <table id="tabela-pagos">
+            <thead>
+              <tr style="background-color: #eafaf1">
+                <th>Item Quitado / Parcela</th>
+                <th>Categoria</th>
+                <th>Tipo de Conta</th>
+                <th class="alinhado-direita">Valor Pago (R$)</th>
+              </tr>
+            </thead>
+            <tbody id="corpo-tabela-pagos"></tbody>
+          </table>
+        </div>
+        <div class="container-totais-pagos">
+          <div style="color: #bc3e3e">
+            Restante para Liquidar: R$
+            <span id="total-restante-pago">0,00</span>
+          </div>
+          <div style="color: var(--green-success)">
+            Total Geral Liquidado: R$ <span id="total-ja-pago">0,00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const MESES_ORDEM = [
+        "janeiro",
+        "fevereiro",
+        "março",
+        "abril",
+        "maio",
+        "junho",
+        "julho",
+        "agosto",
+        "setembro",
+        "outubro",
+        "novembro",
+        "dezembro",
+      ];
+
+      let dadosFinanceiros =
+        JSON.parse(localStorage.getItem("dadosFinanceiros_2026")) || {};
+      let mesAtual = "junho";
+
+      function mudarTema(tema) {
+        document.body.className = "";
+        if (tema !== "rosa") {
+          document.body.classList.add("tema-" + tema);
+        }
+        calcularTudo();
+      }
+
+      function obterValoresPadrao(mes) {
+        return { salario: 0, vt: 0 };
+      }
+
+      function mudarMes(novoMes) {
+        mesAtual = novoMes;
+        let nomeFormatado = novoMes.charAt(0).toUpperCase() + novoMes.slice(1);
+        document.getElementById("titulo-mes-card").textContent =
+          nomeFormatado + " 2026";
+        document.getElementById("calendario-texto").textContent =
+          nomeFormatado + " 2026";
+
+        let padrao = obterValoresPadrao(mesAtual);
+
+        if (!dadosFinanceiros[mesAtual]) {
+          dadosFinanceiros[mesAtual] = {
+            entradas: {
+              salario: padrao.salario,
+              pensao: 0,
+              vt: padrao.vt,
+              extra: 0,
+            },
+            investimentos: { reserva: 0, viagem: 0, apartamento: 0, fundo: 0 },
+            gastos: [],
+            saldoAtualBanco: 0,
+          };
+        }
+
+        const mesData = dadosFinanceiros[mesAtual];
+        document.getElementById("ent-salario").value =
+          mesData.entradas?.salario ?? padrao.salario;
+        document.getElementById("ent-pensao").value =
+          mesData.entradas?.pensao ?? 0;
+        document.getElementById("ent-vt").value =
+          mesData.entradas?.vt ?? padrao.vt;
+        document.getElementById("ent-extra").value =
+          mesData.entradas?.extra ?? 0;
+        document.getElementById("ent-sobra").value =
+          mesData.entradas?.sobra ?? 0;
+
+        document.getElementById("inv-reserva").value =
+          mesData.investimentos?.reserva ?? 0;
+        document.getElementById("inv-viagem").value =
+          mesData.investimentos?.viagem ?? 0;
+        document.getElementById("inv-apartamento").value =
+          mesData.investimentos?.apartamento ?? 0;
+        document.getElementById("inv-fundo").value =
+          mesData.investimentos?.fundo ?? 0;
+
+        renderizarGastos();
+        calcularTudo();
+      }
+
+      function renderizarGastos() {
+        const tbody = document.getElementById("corpo-tabela-gastos");
+        tbody.innerHTML = "";
+        let parcelasHerdadas = obterParcelasDeMesesAnteriores(mesAtual);
+
+        parcelasHerdadas.forEach((p) => {
+          const novaLinha = document.createElement("tr");
+          novaLinha.className = "linha-herdada" + (p.pago ? " linha-paga" : "");
+          let valorDaParcela = p.valorTotal / p.totalParcelas;
+
+          novaLinha.innerHTML = `
+            <td><input type="text" class="input-disabled" value="${
+              p.nome
+            }" disabled>
+                <span class="parcela-info">Origem: ${p.mesOrigem.toUpperCase()}</span></td>
+            <td><select class="tabela-select input-disabled" disabled><option>${
+              p.categoria
+            }</option></select></td>
+            <td><select class="tabela-select input-disabled" disabled><option>Crédito (${
+              p.fechamentoText
+            })</option></select></td>
+            <td><input type="number" class="input-disabled" value="${
+              p.numParcelaAtual
+            }" disabled></td>
+            <td><input type="number" class="input-gasto-calculo alinhado-direita input-disabled" data-tipo="Crédito" data-cat="${
+              p.categoria
+            }" value="${valorDaParcela.toFixed(2)}" disabled>
+                <span class="parcela-info alinhado-direita">Total: R$ ${p.valorTotal.toFixed(
+                  2
+                )} (${p.numParcelaAtual}/${p.totalParcelas})</span></td>
+            <td style="text-align: center;"><input type="checkbox" class="checkbox-pago" ${
+              p.pago ? "checked" : ""
+            } onchange="alternarStatusPagoHerdado('${p.mesOrigem}', '${
+            p.nome
+          }', this.checked)"></td>
+            <td></td>
+          `;
+          tbody.appendChild(novaLinha);
+        });
+
+        let meusGastos = dadosFinanceiros[mesAtual].gastos || [];
+        if (meusGastos.length === 0 && parcelasHerdadas.length === 0) {
+          adicionarLinhaGasto();
+        } else {
+          meusGastos.forEach((g, index) => {
+            gastoParaLinha(g, index);
+          });
+        }
+      }
+
+      function adicionarLinhaGasto() {
+        const tbody = document.getElementById("corpo-tabela-gastos");
+        const novaLinha = document.createElement("tr");
+        novaLinha.innerHTML = `
+          <td><input type="text" class="gasto-nome" placeholder="Ex: Internet"></td>
+          <td>
+              <select class="gasto-cat tabela-select">
+                  <option value="Contas">Contas</option>
+                  <option value="Vestuário">Vestuário</option>
+                  <option value="iFood">iFood</option>
+                  <option value="UBER">UBER</option>
+                  <option value="Saúde">Saúde</option>
+                  <option value="Autoestima">Autoestima</option>
+              </select>
+          </td>
+          <td>
+              <select class="gasto-tipo tabela-select" onchange="alternarCamposParcela(this)">
+                  <option value="Pix">Pix / Débito</option>
+                  <option value="Credito-Antes">Crédito (Até dia 11 - Cai agora)</option>
+                  <option value="Credito-Depois">Crédito (Após dia 11 - Melhor dia)</option>
+              </select>
+          </td>
+          <td><input type="number" class="gasto-parcelas input-disabled" value="1" min="1" disabled></td>
+          <td><input type="number" class="input-gasto" value="0" oninput="calcularTudo()"></td>
+          <td style="text-align: center;"><input type="checkbox" class="checkbox-pago" style="display: none;" onchange="marcarLinhaPagaVisual(this)"></td>
+          <td><button class="btn-deletar" onclick="deletarLinha(this)">×</button></td>
+        `;
+        tbody.appendChild(novaLinha);
+        calcularTudo();
+      }
+
+      function gastoParaLinha(g, index) {
+        const tbody = document.getElementById("corpo-tabela-gastos");
+        const novaLinha = document.createElement("tr");
+        let isCredito = (g.tipo || "Pix").startsWith("Credito");
+        if (g.pago && isCredito) novaLinha.className = "linha-paga";
+
+        novaLinha.innerHTML = `
+          <td><input type="text" class="gasto-nome" value="${g.nome}"></td>
+          <td>
+              <select class="gasto-cat tabela-select">
+                  <option value="Contas" ${
+                    g.categoria === "Contas" ? "selected" : ""
+                  }>Contas</option>
+                  <option value="Vestuário" ${
+                    g.categoria === "Vestuário" ? "selected" : ""
+                  }>Vestuário</option>
+                  <option value="iFood" ${
+                    g.categoria === "iFood" ? "selected" : ""
+                  }>iFood</option>
+                  <option value="UBER" ${
+                    g.categoria === "UBER" ? "selected" : ""
+                  }>UBER</option>
+                  <option value="Saúde" ${
+                    g.categoria === "Saúde" ? "selected" : ""
+                  }>Saúde</option>
+                  <option value="Autoestima" ${
+                    g.categoria === "Autoestima" ? "selected" : ""
+                  }>Autoestima</option>
+              </select>
+          </td>
+          <td>
+              <select class="gasto-tipo tabela-select" onchange="alternarCamposParcela(this)">
+                  <option value="Pix" ${
+                    g.tipo === "Pix" ? "selected" : ""
+                  }>Pix / Débito</option>
+                  <option value="Credito-Antes" ${
+                    g.tipo === "Credito-Antes" ? "selected" : ""
+                  }>Crédito (Até dia 11 - Cai agora)</option>
+                  <option value="Credito-Depois" ${
+                    g.tipo === "Credito-Depois" ? "selected" : ""
+                  }>Crédito (Após dia 11 - Melhor dia)</option>
+              </select>
+          </td>
+          <td><input type="number" class="gasto-parcelas ${
+            !isCredito ? "input-disabled" : ""
+          }" value="${g.parcelas || 1}" min="1" ${
+          !isCredito ? "disabled" : ""
+        }></td>
+          <td><input type="number" class="input-gasto" value="${
+            g.valor
+          }" oninput="calcularTudo()">
+              ${
+                isCredito
+                  ? `<span class="parcela-info alinhado-direita">Parc: R$ ${(
+                      g.valor / Math.max(1, g.parcelas || 1)
+                    ).toFixed(2)} / mês</span>`
+                  : ""
+              }
+          </td>
+          <td style="text-align: center;">
+              <input type="checkbox" class="checkbox-pago" ${
+                g.pago ? "checked" : ""
+              } style="display: ${
+          isCredito ? "inline-block" : "none"
+        };" onchange="marcarLinhaPagaVisual(this)">
+          </td>
+          <td><button class="btn-deletar" onclick="deletarLinha(this, ${index})">×</button></td>
+        `;
+        tbody.appendChild(novaLinha);
+      }
+
+      function alternarCamposParcela(selectElement) {
+        let row = selectElement.closest("tr");
+        let inputParcela = row.querySelector(".gasto-parcelas");
+        let checkboxPago = row.querySelector(".checkbox-pago");
+
+        if (selectElement.value.startsWith("Credito")) {
+          inputParcela.disabled = false;
+          inputParcela.classList.remove("input-disabled");
+          checkboxPago.style.display = "inline-block";
+        } else {
+          inputParcela.disabled = true;
+          inputParcela.value = 1;
+          inputParcela.classList.add("input-disabled");
+          checkboxPago.style.display = "none";
+          checkboxPago.checked = false;
+          row.classList.remove("linha-paga");
+        }
+        calcularTudo();
+      }
+
+      function marcarLinhaPagaVisual(checkbox) {
+        let row = checkbox.closest("tr");
+        if (checkbox.checked) {
+          row.classList.add("linha-paga");
+        } else {
+          row.classList.remove("linha-paga");
+        }
+        calcularTudo();
+      }
+
+      function alternarStatusPagoHerdado(mesOrigem, nomeGasto, status) {
+        if (dadosFinanceiros[mesOrigem] && dadosFinanceiros[mesOrigem].gastos) {
+          let gasto = dadosFinanceiros[mesOrigem].gastos.find(
+            (g) => g.nome === nomeGasto
+          );
+          if (gasto) {
+            if (!gasto.mesesPagos) gasto.mesesPagos = {};
+            gasto.mesesPagos[mesAtual] = status;
+            localStorage.setItem(
+              "dadosFinanceiros_2026",
+              JSON.stringify(dadosFinanceiros)
+            );
+          }
+        }
+        calcularTudo();
+      }
+
+      function deletarLinha(botao, index = null) {
+        botao.closest("tr").remove();
+        calcularTudo();
+      }
+
+      function obterParcelasDeMesesAnteriores(mesAlvo) {
+        let parcelas = [];
+        let idxAlvo = MESES_ORDEM.indexOf(mesAlvo);
+
+        for (let i = 0; i < idxAlvo; i++) {
+          let mAnterior = MESES_ORDEM[i];
+          if (
+            dadosFinanceiros[mAnterior] &&
+            dadosFinanceiros[mAnterior].gastos
+          ) {
+            dadosFinanceiros[mAnterior].gastos.forEach((g) => {
+              if (g.tipo.startsWith("Credito")) {
+                let puloMes = g.tipo === "Credito-Depois" ? 1 : 0;
+                let mesesSePassaram = idxAlvo - (i + puloMes);
+
+                if (mesesSePassaram >= 0 && mesesSePassaram < g.parcelas) {
+                  let foiPagoNesteMes = g.mesesPagos
+                    ? g.mesesPagos[mesAlvo] === true
+                    : false;
+                  parcelas.push({
+                    nome: g.nome,
+                    categoria: g.categoria,
+                    valorTotal: g.valor,
+                    totalParcelas: g.parcelas,
+                    numParcelaAtual: mesesSePassaram + 1,
+                    mesOrigem: mAnterior,
+                    fechamentoText:
+                      g.tipo === "Credito-Depois"
+                        ? "Após dia 11"
+                        : "Até dia 11",
+                    pago: foiPagoNesteMes,
+                  });
+                }
+              }
+            });
+          }
+        }
+        return parcelas;
+      }
+
+      function salvarDadosCompletosDoMes() {
+        let listaGastos = [];
+        document
+          .querySelectorAll("#corpo-tabela-gastos tr:not(.linha-herdada)")
+          .forEach((linha) => {
+            const nomeInput = linha.querySelector(".gasto-nome");
+            const catSelect = linha.querySelector(".gasto-cat");
+            const tipoSelect = linha.querySelector(".gasto-tipo");
+            const parcInput = linha.querySelector(".gasto-parcelas");
+            const valorInput = linha.querySelector(".input-gasto");
+            const pagoCheck = linha.querySelector(".checkbox-pago");
+
+            if (nomeInput && valorInput) {
+              const nome = nomeInput.value;
+              const categoria = catSelect ? catSelect.value : "Contas";
+              const tipo = tipoSelect ? tipoSelect.value : "Pix";
+              const parcelas = parseInt(parcInput ? parcInput.value : 1) || 1;
+              const valor = parseFloat(valorInput.value) || 0;
+              const pago =
+                pagoCheck && tipo.startsWith("Credito")
+                  ? pagoCheck.checked
+                  : false;
+
+              if (nome || valor > 0) {
+                let existente = (dadosFinanceiros[mesAtual]?.gastos || []).find(
+                  (x) => x.nome === nome
+                );
+                let mesesPagos = existente?.mesesPagos || {};
+                listaGastos.push({
+                  nome,
+                  categoria,
+                  tipo,
+                  parcelas,
+                  valor,
+                  pago,
+                  mesesPagos,
+                });
+              }
+            }
+          });
+
+        dadosFinanceiros[mesAtual] = {
+          entradas: {
+            salario:
+              parseFloat(document.getElementById("ent-salario").value) || 0,
+            pensao:
+              parseFloat(document.getElementById("ent-pensao").value) || 0,
+            vt: parseFloat(document.getElementById("ent-vt").value) || 0,
+            extra: parseFloat(document.getElementById("ent-extra").value) || 0,
+            sobra: parseFloat(document.getElementById("ent-sobra").value) || 0,
+          },
+          investimentos: {
+            reserva:
+              parseFloat(document.getElementById("inv-reserva").value) || 0,
+            viagem:
+              parseFloat(document.getElementById("inv-viagem").value) || 0,
+            apartamento:
+              parseFloat(document.getElementById("inv-apartamento").value) || 0,
+            fundo: parseFloat(document.getElementById("inv-fundo").value) || 0,
+          },
+          gastos: listaGastos,
+        };
+
+        localStorage.setItem(
+          "dadosFinanceiros_2026",
+          JSON.stringify(dadosFinanceiros)
+        );
+        alert(
+          "Tudo foi salvo com sucesso! 👑 (Entradas, Metas, Tabela de Gastos e Saldo)"
+        );
+        renderizarGastos();
+      }
+
+      function calcularTudo() {
+        let totalEntradas = 0;
+        document.querySelectorAll(".input-entrada").forEach((input) => {
+          totalEntradas += parseFloat(input.value) || 0;
+        });
+        document.getElementById("val-entradas").textContent = totalEntradas
+          .toFixed(2)
+          .replace(".", ",");
+
+        let totalInvestimentos = 0;
+        document.querySelectorAll(".input-investimento").forEach((input) => {
+          totalInvestimentos += parseFloat(input.value) || 0;
+        });
+        document.getElementById("total-investimentos").textContent =
+          totalInvestimentos.toFixed(2).replace(".", ",");
+
+        let totalSaidas = 0;
+        let totalJaPago = 0;
+
+        let cats = {
+          Contas: 0,
+          Vestuário: 0,
+          iFood: 0,
+          UBER: 0,
+          Saúde: 0,
+          Autoestima: 0,
+        };
+
+        let limites = {
+          Contas: 100.0,
+          Vestuário: 100.0,
+          iFood: 80.0,
+          UBER: 100.0,
+          Saúde: 150.0,
+          Autoestima: 190.0,
+        };
+
+        let totalDebitoPix = 0;
+        let totalCreditoMes = 0;
+
+        const tbodyPagos = document.getElementById("corpo-tabela-pagos");
+        tbodyPagos.innerHTML = "";
+
+        // Processando gastos atuais digitados na tabela
+        document
+          .querySelectorAll("#corpo-tabela-gastos tr:not(.linha-herdada)")
+          .forEach((linha) => {
+            const nomeInput = linha.querySelector(".gasto-nome");
+            const valorInput = linha.querySelector(".input-gasto");
+            const valorGastoTotal =
+              parseFloat(valorInput ? valorInput.value : 0) || 0;
+            const tipoSelect = linha.querySelector(".gasto-tipo");
+            const catSelect = linha.querySelector(".gasto-cat");
+            const parcInput = linha.querySelector(".gasto-parcelas");
+            const pagoCheck = linha.querySelector(".checkbox-pago");
+
+            if (tipoSelect && catSelect && nomeInput) {
+              let numParc = parseInt(parcInput?.value) || 1;
+              let valorRealDesteMes = valorGastoTotal / numParc;
+              let nomeGasto = nomeInput.value || "Item sem nome";
+              let isCredito = tipoSelect.value.startsWith("Credito");
+
+              if (!isCredito) {
+                totalDebitoPix += valorGastoTotal;
+                totalSaidas += valorGastoTotal;
+
+                if (cats[catSelect.value] !== undefined) {
+                  cats[catSelect.value] += valorGastoTotal;
+                }
+              } else {
+                let tipoCredito = tipoSelect.value;
+
+                if (tipoCredito === "Credito-Antes") {
+                  totalCreditoMes += valorRealDesteMes;
+                  totalSaidas += valorRealDesteMes;
+
+                  if (cats[catSelect.value] !== undefined) {
+                    cats[catSelect.value] += valorRealDesteMes;
+                  }
+
+                  if (pagoCheck && pagoCheck.checked) {
+                    totalJaPago += valorRealDesteMes;
+
+                    tbodyPagos.innerHTML += `
+        <tr>
+          <td>✅ ${nomeGasto}</td>
+          <td>${catSelect.value}</td>
+          <td>Crédito</td>
+          <td class="alinhado-direita" style="color: var(--green-success); font-weight:bold;">
+            R$ ${valorRealDesteMes.toFixed(2)}
+          </td>
+        </tr>
+      `;
+                  }
+                }
+
+                // Crédito após dia 11 não entra neste mês.
+                // Vai aparecer somente no próximo mês.
+              }
+            }
+          });
+
+        // Processando gastos herdados (parcelas de meses anteriores)
+        document
+          .querySelectorAll("#corpo-tabela-gastos tr.linha-herdada")
+          .forEach((linha) => {
+            const inputCalc = linha.querySelector(".input-gasto-calculo");
+            const nomeInput = linha.querySelector("input[disabled]");
+            const pagoCheck = linha.querySelector(".checkbox-pago");
+
+            if (inputCalc && nomeInput) {
+              const valorParc = parseFloat(inputCalc.value) || 0;
+              const cat = inputCalc.getAttribute("data-cat");
+              const nomeGasto = nomeInput.value;
+
+              totalCreditoMes += valorParc;
+              totalSaidas += valorParc;
+              if (cats[cat] !== undefined) {
+                cats[cat] += valorParc;
+              }
+
+              if (pagoCheck && pagoCheck.checked) {
+                totalJaPago += valorParc;
+                tbodyPagos.innerHTML += `
+                    <tr>
+                        <td>✅ ${nomeGasto} (Parcelado)</td>
+                        <td>${cat}</td>
+                        <td>Cartão de Crédito</td>
+                        <td class="alinhado-direita" style="color: var(--green-success); font-weight:bold;">R$ ${valorParc.toFixed(
+                          2
+                        )}</td>
+                    </tr>
+                `;
+              }
+            }
+          });
+
+        let totalRestante = totalCreditoMes - totalJaPago;
+        if (totalRestante < 0) totalRestante = 0;
+
+        document.getElementById("val-saidas").textContent = totalSaidas
+          .toFixed(2)
+          .replace(".", ",");
+        document.getElementById("tipo-debito").textContent =
+          "R$ " + totalDebitoPix.toFixed(2).replace(".", ",");
+        document.getElementById("tipo-credito").textContent =
+          "R$ " + totalCreditoMes.toFixed(2).replace(".", ",");
+
+        document.getElementById("total-ja-pago").textContent = totalJaPago
+          .toFixed(2)
+          .replace(".", ",");
+        document.getElementById("total-restante-pago").textContent =
+          totalRestante.toFixed(2).replace(".", ",");
+
+        // Atualizando tetos de gastos por categoria
+        for (let cat in cats) {
+          let idTxt =
+            "txt-lim-" +
+            cat
+              .toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "");
+          if (cat === "Autoestima") idTxt = "txt-lim-autoestima"; // Correção manual do id mapeado no HTML
+
+          let idBar =
+            "bar-" +
+            cat
+              .toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "");
+          if (cat === "Autoestima") idBar = "bar-autoestima";
+
+          let elementoTxt = document.getElementById(idTxt);
+          let elementoBar = document.getElementById(idBar);
+
+          if (elementoTxt && elementoBar) {
+            let teto = limites[cat];
+            let atual = cats[cat];
+            elementoTxt.textContent = `R$ ${atual
+              .toFixed(2)
+              .replace(".", ",")} / Limite: R$ ${teto
+              .toFixed(2)
+              .replace(".", ",")}`;
+
+            let pct = (atual / teto) * 100;
+            if (pct > 100) pct = 100;
+            elementoBar.style.width = pct + "%";
+
+            if (atual > teto) {
+              elementoBar.style.backgroundColor = "#bc3e3e";
+            } else {
+              elementoBar.style.backgroundColor = "var(--dark-accent)";
+            }
+          }
+        }
+
+        // Cálculo de Saldo e Humor do Gatinho
+        let saldoPlanejado = totalEntradas - totalSaidas - totalInvestimentos;
+        document.getElementById("val-saldo").textContent = saldoPlanejado
+          .toFixed(2)
+          .replace(".", ",");
+
+        let totalComprometido = totalSaidas + totalInvestimentos;
+        let pctOrcamento =
+          totalEntradas > 0 ? (totalComprometido / totalEntradas) * 100 : 0;
+
+        document.getElementById("txt-porcentagem").textContent =
+          pctOrcamento.toFixed(0) + "%";
+
+        let gatinhoHumor = document.getElementById("gatinho-humor");
+        let gatinhoTexto = document.getElementById("gatinho-status-texto");
+
+        if (pctOrcamento <= 50) {
+          gatinhoHumor.textContent = "😸";
+          gatinhoTexto.textContent = "Arrasou! Orçamento super controlado!";
+        } else if (pctOrcamento <= 85) {
+          gatinhoHumor.textContent = "😼";
+          gatinhoTexto.textContent = "Dentro do planejado, mas de olho!";
+        } else if (pctOrcamento <= 100) {
+          gatinhoHumor.textContent = "🙀";
+          gatinhoTexto.textContent = "Atenção gatinha, limite quase atingido!";
+        } else {
+          gatinhoHumor.textContent = "😾";
+          gatinhoTexto.textContent = "Eita! O orçamento estourou!";
+        }
+      }
+
+      function compararMes() {
+        const mesComparado = document.getElementById(
+          "comparar-mes-select"
+        ).value;
+        const resultado = document.getElementById("resultado-comparativo");
+
+        if (mesComparado === "0" || !dadosFinanceiros[mesComparado]) {
+          resultado.innerHTML = "Nenhum dado salvo para este mês.";
+          return;
+        }
+
+        const atual = dadosFinanceiros[mesAtual];
+        const comparado = dadosFinanceiros[mesComparado];
+
+        if (!atual || !comparado) {
+          resultado.innerHTML = "Dados insuficientes para comparar.";
+          return;
+        }
+
+        const entradasAtual =
+          (atual.entradas?.salario || 0) +
+          (atual.entradas?.pensao || 0) +
+          (atual.entradas?.vt || 0) +
+          (atual.entradas?.extra || 0);
+
+        const entradasComparado =
+          (comparado.entradas?.salario || 0) +
+          (comparado.entradas?.pensao || 0) +
+          (comparado.entradas?.vt || 0) +
+          (comparado.entradas?.extra || 0);
+
+        const diferenca = entradasAtual - entradasComparado;
+
+        let texto = `
+          <div>Mês atual: <strong>R$ ${entradasAtual
+            .toFixed(2)
+            .replace(".", ",")}</strong></div>
+          <div>${
+            mesComparado.charAt(0).toUpperCase() + mesComparado.slice(1)
+          }: <strong>R$ ${entradasComparado
+          .toFixed(2)
+          .replace(".", ",")}</strong></div>
+        `;
+
+        if (diferenca > 0) {
+          texto += `
+            <div style="color:green;margin-top:8px;">
+                ↑ Você recebeu R$ ${diferenca
+                  .toFixed(2)
+                  .replace(".", ",")} a mais que ${mesComparado}.
+            </div>
+          `;
+        } else if (diferenca < 0) {
+          texto += `
+            <div style="color:red;margin-top:8px;">
+                ↓ Você recebeu R$ ${Math.abs(diferenca)
+                  .toFixed(2)
+                  .replace(".", ",")} a menos que ${mesComparado}.
+            </div>
+          `;
+        } else {
+          texto += `
+            <div style="margin-top:8px;">
+                Os dois meses possuem o mesmo valor de entradas.
+            </div>
+          `;
+        }
+
+        resultado.innerHTML = texto;
+      }
+
+      window.onload = function () {
+        // Tema padrão
+        document.getElementById("select-tema").value = "rosa";
+        mudarTema("rosa");
+
+        // Mês selecionado no select
+        const campoSelectMes = document.getElementById("select-mes");
+
+        if (campoSelectMes) {
+          mudarMes(campoSelectMes.value);
+        }
+
+        calcularTudo();
+      };
+    </script>
+  </body>
+</html>
